@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Contas</title>
+</head>
+<body>
+    
+    <h1> Cadastro de Contas </h1>
+
+    <!-- <div th:text="{mensagem}" style="color
+    : red"></div> -->
+
+    <form th:action="@{/contas/save}" method="POST"
+    th:object="${conta}">
+    Id: <input type="text" th:field="*{id}"/><br/><br/>
+    Número: <input type="number" th:field="*{numero}"/><br/><br/>
+    Data: <input type="date" th:field="*{data}"/><br/><br/>
+    <!-- Transações: <input type="text" th:field="*{transacoes}"/><br/><br/> -->
+    Correntista <input type="text" th:field="*{correntista}"/><br/><br/>
+    <input type="submit" value="Salvar"/>
+    </form>
+
+</body>
+</html>

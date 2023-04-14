@@ -1,0 +1,36 @@
+<!doctypehtml>
+<htmllang="pt_BR"xmlns:th="www.thymeleaf.org">
+    
+<head>
+    <title>BitBank -Cadastro de Transações</title>
+</head>
+
+<body>
+    <ul>
+        <li>Conta:<span th:text="${conta.numero}"></span></li>
+        <li>Correntista:<span th:text="${conta.correntista.nome}"></span></li>
+        <li>Data abertura:<span th:text="${conta.data}"></span></li>
+    </ul>
+    <div style="margin-bottom: 30px;"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Descricao</th>
+                <th>Data</th>
+                <th style="text-align: right">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="transacao : ${conta.transacoes}">
+                <td th:text="${transacao.descricao}"/>
+                <td th:text="${transacao.data}"/>
+                <td th:text="${transacao.valor}"style="text-align: right"/>
+            </tr>
+            <th style="font-weight:bold; background-color: darkgray;"colspan="2">Total</th>
+            <td style="font-weight:bold; background-color: darkgray;text-align: right" th:text="${conta.saldo}"></td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

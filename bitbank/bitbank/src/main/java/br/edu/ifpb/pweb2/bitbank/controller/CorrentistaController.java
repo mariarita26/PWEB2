@@ -1,10 +1,11 @@
 package br.edu.ifpb.pweb2.bitbank.controller;
 
-import java.lang.ProcessBuilder.Redirect;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,19 +27,31 @@ public class CorrentistaController {
         return "correntistas/form";
     }
 
-    // @RequestMapping("/save")
-    // public String save(Correntista correntista, Model model){
-    //     CorrentistaRepository.save(correntista);
-    //     model.addAttribute("correntistas", CorrentistaRepository.findAll());
-    //     return "correntistas/list";
-    // }
-
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(Correntista correntista, ModelAndView model, RedirectAttributes redAttrs) {
-        CorrentistaRepository.save(correntista);
-        model.addObject("correntistas", CorrentistaRepository.findAll());
+        correntistaRepository.save(correntista);
+        model.addObject("correntistas", correntistaRepository.findAll());
         model.setViewName("redirect:correntistas");
         redAttrs.addFlashAttribute("mensagem", "Correntista cadastrado com sucesso!");
+        return model;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView listAll(ModelAndView model) {
+        model.addObject("correntistas", correntistaRepository.findAll());
+        model.setViewName("correntistas/list");
+        return model;
+    }
+
+    @RequestMapping("/{id}")
+    public ModelAndView getCorrentistaById(@PathVariable(value = "id") Integer id, ModelAndView model) {
+        model.setViewName("correntista/form");
+        Optional<Correntista> opCorrentista = correntistaRepository.findById(id);
+        if (opCorrentista.isPresent()) {
+            model.addObject("correntista", opCorrentista.get());
+        } else {
+            model.addObject("mensagem", "Correntista com id "+ id + " não encontrado.");
+        }
         return model;
     }
 

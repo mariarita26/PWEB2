@@ -16,10 +16,12 @@
         <input type="text" th:field="*{numero}"/> <br/> <br/>
 
         <label for="correntista">Correntista</label>
-        <select th:field="*{correntista.id}">
+        <select th:field="*{correntista}" class="form-select">
             <option th:each="cor : ${correntistaItems}" 
-            th:value="${cor.id}" th:label="${cor.nome}" />
-        </select> <br/> <br/>
+            th:value="${cor.id}" th:text="${cor.nome}"
+            th:selected="${cor.id==correntista}" />
+        </select> 
+        <br/> <br/>
 
         <!-- <label for="lastName">Data</label>
         <input type="text" th:field="*{data}" /><br/><br/> -->

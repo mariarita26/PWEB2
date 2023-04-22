@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Livros Cadastrados</title>
+</head>
+
+<body>
+    <h2>Livros Cadstrados</h2>
+
+    <form action="/livros/form" method="get">
+        <input type="submit" value="Novo cadastro" />
+    </form>
+    <br />
+
+    <div style="color: blue; margin-bottom: 10px;" th:text="${mensagem}"/>
+
+    <table border="1">
+        <thead>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Estilo</th>
+            <th>Data da Publicação</th>
+        </thead>
+        <tbody>
+            <tr th:each="livro : ${livros}" style="padding: 3px;">
+                <td><a th:href="@{/livros/edite/{id}(id=${livro.id})}" th:text="${livro.titulo}"></a></td>
+                <td th:text="${livro.autor}"></td>
+                <td th:text="${estilos[livro.estilo]}"></td>
+                <td th:text="${#dates.format(livro.dataPublicacao, 'dd/MM/yyyy')}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

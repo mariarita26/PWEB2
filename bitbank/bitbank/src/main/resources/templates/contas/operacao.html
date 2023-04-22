@@ -1,46 +1,59 @@
-<!doctypehtml>
-<htmllang="pt_BR"xmlns:th="www.thymeleaf.org">
-    
-<head>
-    <title>BitBank -Cadastro de Operações</title>
-</head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:insert="~{layout/layout}" th:with="titulo='Operação em Conta'">
 
 <body>
-    <h1>Cadastro de Operação</h1>
-     <div th:if="${conta == null}">
-        <form th:action="@{/contas/operacao}"method="POST">
-            <label for="nuConta">Número da conta</label>
-            <input type="text"id="nuConta"name="nuConta"class="form-control"/>
-            <button type="submit">Próximo</button>
-        </form>
-    </div>
+    <div layout:fragment="content">
 
-    <div th:if="${conta != null}">
-        <ul>
-            <li>Conta:<span th:text="${conta.numero}"></span></li>
-            <li>Correntista:<span th:text="${conta.correntista.nome}"></span></li>
-            <li>Data abertura:<span th:text="${conta.data}"></span></li>
-        </ul>
+        <div th:if="${conta == null}">
+            <form th:action="@{/contas/operacao}" method="POST">
+                <div class="row">
+                    <div class="col-md-2 mb-2">
+                        <label for="nuConta">Número da conta</label>
+                        <input type="text" id="nuConta" name="nuConta" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-md btn-block" type="submit">
+                            Próximo
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-        <div style="margin-bottom: 30px;"> </div>
+        <div th:if="${conta != null}">
+            <ul>
+                <li>Conta:
+                    <span th:text="${conta.numero}"></span>
+                </li>
+                <li>Correntista:
+                    <span th:text="${conta.correntista.nome}"></span>
+                </li>
+                <li>Data abertura:
+                    <span th:text="${conta.data}"></span>
+                </li>
+            </ul>
 
-        <h4>Informações da transação</h4>
+            <div style="margin-bottom: 30px;"></div>
 
-        <hr class="mb-4">
-        <form action="operacao" method="POST" th:object="${transacao}">
-            <input type="hidden" th:field="*{id}"/>
-            <input type="hidden" th:value="${conta.numero}"id="nuConta"name="nuConta"/>
-            
-            <label for="descricao">Descrição</label>
-            <input type="text"class="form-control"th:field="*{descricao}"/> <br/>
-            
-            <label for="data">Data</label> 
-            <input type="text" class="form-control" th:field="*{data}"/><br/>
-            <label for="valor">Valor</label>
-            <input type="text" class="form-control" th:field="*{valor}"/><br/>
-           
-            <button type="submit">Realizar operação</button>
-        </form>
+            <h4>Informações da transação</h4>
+            <hr class="mb-4">
+
+            <form action="operacao" method="POST" th:object="${transacao}">
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:value="${conta.numero}" id="nuConta" name="nuConta" />
+                <label for="descricao">Descrição</label>
+                <input type="text" class="form-control" th:field="*{descricao}" /> <br />
+
+                <label for="data">Data</label>
+                <input type="text" class="form-control" th:field="*{data}" /> <br />
+                <label for="valor">Valor</label>
+                <input type="text" class="form-control" th:field="*{valor}" /><br />
+
+                <button type="submit" class="btn btn-primary">Realizar operação</button>
+            </form>
+        </div>
     </div>
 </body>
+
 </html>
